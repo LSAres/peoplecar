@@ -67,4 +67,59 @@ class AdminControlController extends CommonController {
             echo "<script>javascript:history.back(-1);</script>";die;
         }
     }
+
+    public function adminPasswordUpdate(){
+        if(!I('post.')) {
+            $sp_id = I('get.sp_id');
+            $this->assign('sp_id',$sp_id);
+            $this->display();
+        }else{
+            $t=I('post.');
+            foreach($t as $v){
+                if($v == ''){
+                    echo "<script>alert('请确认输入完成');</script>";
+                    echo "<script>javascript:history.back(-1);</script>";die;
+                }
+            }
+            $sp_id = I('post.sp_id');
+            $password = I('post.password');
+            $new_password = I('post.new_password');
+            $new_passwordT = I('post.new_passwordT');
+            if($new_password!=$new_passwordT){
+                echo "<script>alert('两次输入密码不一致');</script>";
+                echo "<script>javascript:history.back(-1);</script>";die;
+            }
+            $superInfo = M('nzspuser')->where('sp_id='.$sp_id)->find();
+            $get_password = md5(md5(trim($password)).$superInfo['sp_salt']);
+            if($get_password!=$superInfo['sp_password']){
+                echo "<script>alert('原始密码错误');</script>";
+                echo "<script>javascript:history.back(-1);</script>";die;
+            }
+            $set_new_password = md5(md5(trim($new_password)).$superInfo['sp_salt']);
+            $res = M('nzspuser')->where('sp_id='.$sp_id)->setField('sp_password',$set_new_password);
+            if($res){
+                echo "<script>alert('密码修改成功');location.href='".U('AdminControl/adminListPage')."'</script>";
+                exit();
+            }else{
+                echo "<script>alert('密码修改失败');</script>";
+                echo "<script>javascript:history.back(-1);</script>";die;
+            }
+        }
+    }
+
+    public function Deletesuper(){
+        $sp_id = I('get.sp_id');
+        if($sp_id==1){
+            echo "<script>alert('原始管理员不可删除');</script>";
+            echo "<script>javascript:history.back(-1);</script>";die;
+        }
+        $res = M('nzspuser')->where('sp_id='.$sp_id)->delete();
+        if($res){
+            echo "<script>alert('删除成功');location.href='".U('AdminControl/adminListPage')."'</script>";
+            exit();
+        }else{
+            echo "<script>alert('删除失败');</script>";
+            echo "<script>javascript:history.back(-1);</script>";die;
+        }
+    }
 }

@@ -25,9 +25,9 @@
             <td>{$value.sp_addtime|date="Y-m-d h:i:s",###}</td>
             <td>{$value.sp_loginip}</td>
             <td>
-                <a href="">删除管理员</a>
+                <a href="{:U(MODULE_NAME.'/AdminControl/Deletesuper',array('sp_id'=>$value['sp_id']))}">删除管理员</a>
                 <br>
-                <a href="index.php?s=/super/AdminControl/adminPasswordUpdate.html">修改管理员密码</a>
+                <a href="{:U(MODULE_NAME.'/AdminControl/adminPasswordUpdate',array('sp_id'=>$value['sp_id']))}">修改管理员密码</a>
             </td>
         </tr>
     </foreach>
