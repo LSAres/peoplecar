@@ -709,4 +709,10 @@ class UserAdministrationController extends CommonController {
         ));
         $this->display();
     }
+
+    public function enter_game(){
+        $userid = I('get.userid');
+        session('userid',$userid);
+        redirect(U('/Mobile/Index/copyPageTwo'));
+    }
 }
