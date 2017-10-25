@@ -74,7 +74,7 @@ class UserAdministrationController extends CommonController {
                    $cg['money']="+7000";
                    $cg['reason']="直推奖励购车基金";
                    $cg['time']=time();
-                   M('getBuycarMoney_record')->data($cg)->add();
+                   M('getbuycarmoney_record')->data($cg)->add();
                }
                //判断奖励是否发放成功
                if(!$rs||!$rc){
