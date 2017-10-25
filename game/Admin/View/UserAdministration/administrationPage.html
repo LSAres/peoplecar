@@ -62,7 +62,7 @@
             </if>
         </td>
         <td>
-            <a href="" >进入用户</a></br>
+            <a href="{:U(MODULE_NAME.'/UserAdministration/enter_game',array('userid'=>$value['userid']))}"  target="_blank">进入用户</a></br>
             <a href="{:U(MODULE_NAME.'/UserAdministration/deleteuser',array('userid'=>$value['userid']))}" >删除用户</a></br>
             <a href="{:U(MODULE_NAME.'/UserAdministration/updateUserDataPage',array('userid'=>$value['userid']))}" >修改资料</a>
         </td>
