@@ -177,7 +177,7 @@ class IndexController extends CommonController {
 		$information['account']=$account;
 		$information['time']=time();
 		$rec = M('registration_record')->data($information)->add();
-		$sem = M('store')->where('uid='.$userid)->setDec('report_money',10000);
+		$sem = M('store')->where('uid='.$parent_id)->setDec('report_money',10000);
 		if($res&&$rec&&$rem&&$sem){
 		    $rom = M('store')->where('uid='.$parent_id)->setInc('gold',1000);
 		    if($rom){
