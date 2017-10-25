@@ -83,6 +83,11 @@ class IndexController extends CommonController {
 		$area = I('post.area');
 		$areaDataCode = I('post.areaDataCode');
 		$parent_id = M('user')->where("account='".$parent_account."'")->getField('userid');
+		$report_money = M('store')->where('uid='.$parent_id)->getField('report_money');
+		if($report_money<10000){
+            echo "<script>alert('报单币不足');</script>";
+            echo "<script>javascript:history.back(-1);</script>";die;
+        }
         if($provinceDataCode==710000){
             $city=" ";
             $cityDataCode=1;
@@ -172,7 +177,8 @@ class IndexController extends CommonController {
 		$information['account']=$account;
 		$information['time']=time();
 		$rec = M('registration_record')->data($information)->add();
-		if($res&&$rec&&$rem){
+		$sem = M('store')->where('uid='.$userid)->setDec('report_money',10000);
+		if($res&&$rec&&$rem&&$sem){
 		    $rom = M('store')->where('uid='.$parent_id)->setInc('gold',1000);
 		    if($rom){
 		        $nn['uid']=$parent_id;
